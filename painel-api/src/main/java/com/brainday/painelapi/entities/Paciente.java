@@ -1,6 +1,7 @@
 package com.brainday.painelapi.entities;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -33,5 +34,5 @@ public class Paciente {
     private LocalDate dataNascimento;
 
     @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Laudo> laudos;
+    private List<Laudo> laudos = new ArrayList<>();
 }

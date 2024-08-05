@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/admin")
 public class AdminController {
 	
-	PacienteService pacienteService;
+	private final PacienteService pacienteService;
 
     @GetMapping
     public ResponseEntity<String> getDoctorPanel() {
