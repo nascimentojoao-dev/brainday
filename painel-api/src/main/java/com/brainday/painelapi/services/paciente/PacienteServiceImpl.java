@@ -2,6 +2,7 @@ package com.brainday.painelapi.services.paciente;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -50,27 +51,86 @@ public class PacienteServiceImpl implements PacienteService {
 	}
 
 	@Override
-	public PacienteDTO getPaciente(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public PacienteDTO getPacienteById(Long id) {
+
+		Optional<Paciente> optionalPaciente = pacienteRepository.findById(id);
+
+		if (optionalPaciente.isPresent()) {
+			Paciente paciente = optionalPaciente.get();
+
+			return new PacienteDTO(paciente.getId(), paciente.getNome(), paciente.getDataNascimento(),
+					paciente.getLaudos().stream().map(laudo -> new LaudoDTO(laudo.getId(), laudo.getData(),
+							laudo.getDescricao(), laudo.getPaciente().getId())).collect(Collectors.toList()));
+		} else {
+			throw new RuntimeException("Paciente com id: " + id + " não encontrado.");
+		}
 	}
 
 	@Override
-	public PacienteDTO updatePaciente(Long id, PacienteDTO pacienteDTO) {
-		// TODO Auto-generated method stub
-		return null;
+	public PacienteDTO updatePacienteById(Long id, PacienteDTO pacienteDTO) {
+		Optional<Paciente> optionalPaciente = pacienteRepository.findById(id);
+
+		if (optionalPaciente.isPresent()) {
+			Paciente foundPaciente = optionalPaciente.get();
+
+			if (pacienteDTO.getNome() != null && !pacienteDTO.getNome().isEmpty()) {
+				foundPaciente.setNome(pacienteDTO.getNome());
+			}
+
+			if (pacienteDTO.getDataNascimento() != null) {
+
+				foundPaciente.setDataNascimento(pacienteDTO.getDataNascimento());
+			}
+
+			if (pacienteDTO.getLaudos() != null && !pacienteDTO.getLaudos().isEmpty()) {
+				List<Laudo> existingLaudos = foundPaciente.getLaudos();
+
+				List<Laudo> newLaudos = pacienteDTO.getLaudos().stream().map(laudoDTO -> {
+					Laudo laudo = new Laudo();
+					laudo.setData(laudoDTO.getData());
+					laudo.setDescricao(laudoDTO.getDescricao());
+					laudo.setPaciente(foundPaciente);
+					return laudo;
+				}).collect(Collectors.toList());
+
+				existingLaudos.addAll(newLaudos);
+				foundPaciente.setLaudos(existingLaudos);
+			}
+
+			Paciente updatedPaciente = pacienteRepository.save(foundPaciente);
+
+			return new PacienteDTO(updatedPaciente.getId(), updatedPaciente.getNome(),
+					updatedPaciente.getDataNascimento(),
+					updatedPaciente.getLaudos().stream().map(laudo -> new LaudoDTO(laudo.getId(), laudo.getData(),
+							laudo.getDescricao(), laudo.getPaciente().getId())).collect(Collectors.toList()));
+		} else {
+			throw new RuntimeException("Paciente com id: " + id + " não encontrado.");
+		}
 	}
 
 	@Override
-	public void deletePaciente(Long id) {
-		// TODO Auto-generated method stub
+	public void deletePacienteById(Long id) {
+		Optional<Paciente> optionalPaciente = pacienteRepository.findById(id);
 
+		if (optionalPaciente.isPresent()) {
+			pacienteRepository.deleteById(id);
+		} else {
+			throw new RuntimeException("Paciente com id: " + id + " não encontrado.");
+		}
 	}
 
 	@Override
 	public List<PacienteDTO> getAllPacientes() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Paciente> pacientes = pacienteRepository.findAll();
+
+		return pacientes.stream()
+				.map(paciente -> new PacienteDTO(paciente.getId(), paciente.getNome(), paciente.getDataNascimento(),
+						paciente.getLaudos().stream()
+								.map(laudo -> new LaudoDTO(laudo.getId(), laudo.getData(), laudo.getDescricao(),
+										laudo.getPaciente().getId()))
+								.collect(Collectors.toList())))
+				.collect(Collectors.toList());
+
 	}
 
 }
