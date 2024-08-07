@@ -11,12 +11,15 @@ import com.brainday.painelapi.entities.Paciente;
 import com.brainday.painelapi.repositories.LaudoRepository;
 import com.brainday.painelapi.repositories.PacienteRepository;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Service
 public class LaudoServiceImpl implements LaudoService {
 
-    private LaudoRepository laudoRepository;
+    private final LaudoRepository laudoRepository;
 
-    private PacienteRepository pacienteRepository;
+    private final PacienteRepository pacienteRepository;
 
     @Override
     public LaudoDTO addLaudoByPacienteId(Long pacienteId, LaudoDTO laudoDTO) {
