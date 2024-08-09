@@ -2,6 +2,7 @@ package com.brainday.painelapi.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -21,8 +22,10 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 		http
 		.csrf(AbstractHttpConfigurer::disable)
+		.csrf(csrf -> csrf.disable())
 		.formLogin(AbstractHttpConfigurer::disable)
 		.authorizeHttpRequests(req -> req
+				.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 				.requestMatchers("/admin/**").hasRole("ADMIN")
 				.anyRequest().authenticated())
 		.httpBasic(Customizer.withDefaults());

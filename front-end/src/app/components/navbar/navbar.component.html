@@ -1,1 +1,17 @@
-<p>navbar works!</p>
+<nav class="bg-gray-800 p-4">
+  <div class="container mx-auto flex justify-between items-center">
+    <div class="text-white text-2xl font-bold">
+      <a href="/pacientes">Brainday</a>
+    </div>
+
+    <div class="flex items-center space-x-4">
+      <ng-container *ngIf="!isLoggedIn(); else loggedIn">
+        <a href="/login" class="text-white hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">Login</a>
+      </ng-container>
+      <ng-template #loggedIn>
+        <button (click)="onLogout()"
+          class="text-white hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">Logout</button>
+      </ng-template>
+    </div>
+  </div>
+</nav>

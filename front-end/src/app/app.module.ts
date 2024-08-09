@@ -3,28 +3,36 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './components/navbar/navbar/navbar.component';
 import { PacientesListComponent } from './components/pacientes-list/pacientes-list.component';
 import { PacienteDetailsComponent } from './components/paciente-details/paciente-details.component';
 import { AddPacienteFormComponent } from './components/add-paciente-form/add-paciente-form.component';
 import { UpdatePacienteFormComponent } from './components/update-paciente-form/update-paciente-form.component';
 import { LoginComponent } from './pages/login/login.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http"
+import { AuthInterceptor } from './auth.interceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
     PacientesListComponent,
     PacienteDetailsComponent,
     AddPacienteFormComponent,
     UpdatePacienteFormComponent,
-    LoginComponent
+    LoginComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
