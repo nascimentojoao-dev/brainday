@@ -22,4 +22,8 @@ export class PacienteService {
   addPaciente(paciente: any): Observable<any> {
     return this.http.post(`${this.apiUrl}`, paciente);
   }  
+
+  getPacienteById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${id}`);
+  }  
 }
