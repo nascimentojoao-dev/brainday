@@ -1,1 +1,28 @@
-<p>add-paciente-form works!</p>
+<div class="container p-4 mx-auto">
+  <div class="flex items-center justify-between mb-4">
+    <h1 class="text-2xl font-bold">Adicionar Paciente</h1>
+    <button (click)="goBack()" class="px-4 py-2 text-white bg-gray-500 rounded hover:bg-gray-700">
+      Voltar
+    </button>
+  </div>
+
+  <div class="p-6 bg-white rounded shadow-md">
+    <form (ngSubmit)="onSubmit()">
+      <div class="mb-4">
+        <label for="nome" class="block mb-2 text-sm font-bold text-gray-700">Nome:</label>
+        <input [(ngModel)]="paciente.nome" name="nome" id="nome" class="w-full p-2 border" required />
+      </div>
+      
+      <div class="mb-4">
+        <label for="dataNascimento" class="block mb-2 text-sm font-bold text-gray-700">Data de Nascimento:</label>
+        <input [(ngModel)]="paciente.dataNascimento" name="dataNascimento" id="dataNascimento" type="date" class="w-full p-2 border" required />
+      </div>
+
+      <div class="flex justify-end">
+        <button type="submit" class="px-4 py-2 text-white rounded bg-slate-500 hover:bg-slate-700">
+          Adicionar Paciente
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
