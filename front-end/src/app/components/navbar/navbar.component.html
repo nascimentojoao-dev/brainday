@@ -1,16 +1,16 @@
-<nav class="bg-gray-800 p-4">
-  <div class="container mx-auto flex justify-between items-center">
-    <div class="text-white text-2xl font-bold">
+<nav class="p-4 bg-gray-800">
+  <div class="container flex items-center justify-between mx-auto">
+    <div class="text-2xl font-bold text-white">
       <a href="/pacientes">Brainday</a>
     </div>
 
     <div class="flex items-center space-x-4">
       <ng-container *ngIf="!isLoggedIn(); else loggedIn">
-        <a href="/login" class="text-white hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">Login</a>
+        <a href="/login" class="px-3 py-2 text-sm font-medium text-white rounded-md hover:bg-gray-700">Login</a>
       </ng-container>
       <ng-template #loggedIn>
         <button (click)="onLogout()"
-          class="text-white hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">Logout</button>
+          class="px-3 py-2 text-sm font-medium text-white rounded-md hover:bg-gray-700">Logout</button>
       </ng-template>
     </div>
   </div>
