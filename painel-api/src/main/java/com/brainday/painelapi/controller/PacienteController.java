@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/admin")
-public class AdminController {
+public class PacienteController {
 	
 	private final PacienteService pacienteService;
 
@@ -52,8 +52,7 @@ public class AdminController {
     }
     
     @DeleteMapping("pacientes/{id}")
-    public ResponseEntity<String> deletePacienteById(@PathVariable Long id) {
+    public void deletePacienteById(@PathVariable Long id) {
     	pacienteService.deletePacienteById(id);
-    	return ResponseEntity.ok("Paciente deletado com sucesso!");
     }
 }
