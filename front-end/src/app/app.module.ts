@@ -12,6 +12,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http"
 import { AuthInterceptor } from './auth.interceptor';
+import { AddLaudoFormComponent } from './components/add-laudo-form/add-laudo-form.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { AuthInterceptor } from './auth.interceptor';
     PacienteDetailsComponent,
     AddPacienteFormComponent,
     UpdatePacienteFormComponent,
+    AddLaudoFormComponent,
     LoginComponent,
     NavbarComponent,
   ],

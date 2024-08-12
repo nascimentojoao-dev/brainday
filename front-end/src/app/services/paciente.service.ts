@@ -7,23 +7,27 @@ import { Observable } from 'rxjs';
 })
 export class PacienteService {
 
-  private apiUrl = 'http://localhost:8080/admin/pacientes';
+  private apiUrl = 'http://localhost:8080/admin';
 
   constructor(private http: HttpClient) { }
 
   getPacientes(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+    return this.http.get<any[]>(`${this.apiUrl}/pacientes`);
   }
 
   deletePaciente(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/${id}`)
+    return this.http.delete<any>(`${this.apiUrl}/pacientes/${id}`)
   }
 
   addPaciente(paciente: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}`, paciente);
-  }  
+    return this.http.post(`${this.apiUrl}/pacientes`, paciente);
+  }
 
   getPacienteById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${id}`);
-  }  
+    return this.http.get<any>(`${this.apiUrl}/pacientes/${id}`);
+  }
+
+  addLaudoToPaciente(pacienteId: number, laudo: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/laudos/${pacienteId}`, laudo);
+  }
 }
