@@ -30,4 +30,8 @@ export class PacienteService {
   addLaudoToPaciente(pacienteId: number, laudo: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/laudos/${pacienteId}`, laudo);
   }
+
+  updatePaciente(pacienteId: number, paciente: any): Observable<any>{
+    return this.http.put(`${this.apiUrl}/pacientes/${pacienteId}`, paciente)
+  }
 }
