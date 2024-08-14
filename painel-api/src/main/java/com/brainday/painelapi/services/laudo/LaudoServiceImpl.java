@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.brainday.painelapi.dtos.LaudoDTO;
 import com.brainday.painelapi.entities.Laudo;
 import com.brainday.painelapi.entities.Paciente;
+import com.brainday.painelapi.exceptions.LaudoNotFoundException;
+import com.brainday.painelapi.exceptions.PacienteNotFoundException;
 import com.brainday.painelapi.repositories.LaudoRepository;
 import com.brainday.painelapi.repositories.PacienteRepository;
 
@@ -24,7 +26,7 @@ public class LaudoServiceImpl implements LaudoService {
     @Override
     public LaudoDTO addLaudoByPacienteId(Long pacienteId, LaudoDTO laudoDTO) {
         Paciente paciente = pacienteRepository.findById(pacienteId)
-                .orElseThrow(() -> new RuntimeException("Paciente com id: " + pacienteId + " não encontrado."));
+                .orElseThrow(() -> new PacienteNotFoundException(pacienteId));
 
         Laudo laudo = new Laudo();
         laudo.setData(laudoDTO.getData());
@@ -39,7 +41,7 @@ public class LaudoServiceImpl implements LaudoService {
     @Override
     public LaudoDTO getLaudoByLaudoId(Long laudoId) {
         Laudo laudo = laudoRepository.findById(laudoId)
-                .orElseThrow(() -> new RuntimeException("Laudo com id: " + laudoId + " não encontrado."));
+                .orElseThrow(() -> new LaudoNotFoundException(laudoId));
 
         return new LaudoDTO(laudo.getId(), laudo.getData(), laudo.getDescricao(), laudo.getPaciente().getId());
     }
@@ -47,7 +49,7 @@ public class LaudoServiceImpl implements LaudoService {
     @Override
     public LaudoDTO updateLaudoByLaudoId(Long laudoId, LaudoDTO laudoDTO) {
         Laudo laudo = laudoRepository.findById(laudoId)
-                .orElseThrow(() -> new RuntimeException("Laudo com id: " + laudoId + " não encontrado."));
+                .orElseThrow(() -> new LaudoNotFoundException(laudoId));
 
         if (laudoDTO.getData() != null) {
             laudo.setData(laudoDTO.getData());
@@ -65,7 +67,7 @@ public class LaudoServiceImpl implements LaudoService {
     @Override
     public void deleteLaudoByLaudoId(Long laudoId) {
         Laudo laudo = laudoRepository.findById(laudoId)
-                .orElseThrow(() -> new RuntimeException("Laudo com id: " + laudoId + " não encontrado."));
+                .orElseThrow(() -> new LaudoNotFoundException(laudoId));
 
         laudoRepository.delete(laudo);
     }
@@ -81,7 +83,7 @@ public class LaudoServiceImpl implements LaudoService {
     @Override
     public List<LaudoDTO> getLaudosByPacienteId(Long pacienteId) {
         Paciente paciente = pacienteRepository.findById(pacienteId)
-                .orElseThrow(() -> new RuntimeException("Paciente com id: " + pacienteId + " não encontrado."));
+                .orElseThrow(() -> new PacienteNotFoundException(pacienteId));
 
         List<Laudo> laudos = paciente.getLaudos();
         return laudos.stream()

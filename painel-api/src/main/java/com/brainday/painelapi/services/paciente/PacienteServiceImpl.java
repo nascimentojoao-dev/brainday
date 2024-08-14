@@ -11,6 +11,8 @@ import com.brainday.painelapi.dtos.LaudoDTO;
 import com.brainday.painelapi.dtos.PacienteDTO;
 import com.brainday.painelapi.entities.Laudo;
 import com.brainday.painelapi.entities.Paciente;
+import com.brainday.painelapi.exceptions.PacienteAlreadyExistsException;
+import com.brainday.painelapi.exceptions.PacienteNotFoundException;
 import com.brainday.painelapi.repositories.PacienteRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,10 @@ public class PacienteServiceImpl implements PacienteService {
 
 	@Override
 	public PacienteDTO addPaciente(PacienteDTO pacienteDTO) {
+		if (pacienteRepository.existsByNome(pacienteDTO.getNome())){
+			throw new PacienteAlreadyExistsException(pacienteDTO.getNome());
+		}
+		
 		Paciente paciente = new Paciente();
 		paciente.setNome(pacienteDTO.getNome());
 		paciente.setDataNascimento(pacienteDTO.getDataNascimento());
@@ -62,7 +68,7 @@ public class PacienteServiceImpl implements PacienteService {
 					paciente.getLaudos().stream().map(laudo -> new LaudoDTO(laudo.getId(), laudo.getData(),
 							laudo.getDescricao(), laudo.getPaciente().getId())).collect(Collectors.toList()));
 		} else {
-			throw new RuntimeException("Paciente com id: " + id + " não encontrado.");
+			throw new PacienteNotFoundException(id);
 		}
 	}
 
@@ -104,7 +110,7 @@ public class PacienteServiceImpl implements PacienteService {
 					updatedPaciente.getLaudos().stream().map(laudo -> new LaudoDTO(laudo.getId(), laudo.getData(),
 							laudo.getDescricao(), laudo.getPaciente().getId())).collect(Collectors.toList()));
 		} else {
-			throw new RuntimeException("Paciente com id: " + id + " não encontrado.");
+			throw new PacienteNotFoundException(id);
 		}
 	}
 
@@ -115,7 +121,7 @@ public class PacienteServiceImpl implements PacienteService {
 		if (optionalPaciente.isPresent()) {
 			pacienteRepository.deleteById(id);
 		} else {
-			throw new RuntimeException("Paciente com id: " + id + " não encontrado.");
+			throw new PacienteNotFoundException(id);
 		}
 	}
 
@@ -130,7 +136,5 @@ public class PacienteServiceImpl implements PacienteService {
 										laudo.getPaciente().getId()))
 								.collect(Collectors.toList())))
 				.collect(Collectors.toList());
-
 	}
-
 }
