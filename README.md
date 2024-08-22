@@ -1,11 +1,11 @@
 # Projeto de API de Pacientes e Laudos
 
-Este projeto é uma API desenvolvida em Spring Boot com um painel frontend em Angular para gerenciar pacientes e laudos. O objetivo principal é fornecer uma interface simples para a administração de pacientes e laudos associados a eles.
+Este projeto é uma API desenvolvida em Spring Boot com um painel frontend em Angular para gerenciar pacientes e laudos. O objetivo principal é fornecer uma interface simples para a administração de pacientes e seus respectivos laudos médicos.
 
 ## Tecnologias Utilizadas
 
 - **Backend**: Spring Boot / Java
-- **Frontend**: Angular / Typescript
+- **Frontend**: Angular / TypeScript
 - **Banco de Dados**: PostgreSQL
 - **Autenticação**: Basic (admin/admin)
 - **Estilização**: Tailwind CSS
@@ -51,6 +51,8 @@ O backend e o frontend estão no mesmo repositório. Siga os passos abaixo para 
 
 ### Backend
 
+Para configurar o backend, siga estes passos:
+
 1. Clone o repositório:
    ```bash
    git clone https://github.com/nascimentojoao-dev/brainday.git
@@ -58,10 +60,29 @@ O backend e o frontend estão no mesmo repositório. Siga os passos abaixo para 
    ```
 
 2. Configure o banco de dados no arquivo src/main/resources/application.properties: 
-  ```bash
-  spring.datasource.url=jdbc:postgresql://localhost:5432/nome_do_banco
-  spring.datasource.username=usuario
-  spring.datasource.password=senha
+
+Para garantir a segurança das informações sensíveis, as credenciais e outros valores de configuração foram substituídos por placeholders. Para executar a aplicação corretamente, é necessário definir as seguintes variáveis de ambiente:
+
+- `DB_NAME`: Nome do banco de dados
+- `DB_USER`: Nome de usuário do banco de dados
+- `DB_PASSWORD`: Senha do banco de dados
+- `SERVER_PORT`: Porta na qual o servidor deve rodar (opcional, padrão é 8080)
+
+**Nota**: O backend está configurado para criar automaticamente as tabelas ao iniciar, mas o banco de dados (`DB_NAME`) deve ser criado manualmente antes de rodar a aplicação. Certifique-se de que as variáveis de ambiente estão configuradas corretamente para que o servidor possa se conectar ao banco de dados.
+
+Exemplo de configuração local:
+
+  ```properties
+  spring.datasource.url=jdbc:postgresql://localhost:5432/brainday
+  spring.datasource.username=postgres
+  spring.datasource.password=postgres
+  server.port=8080
+  ```
+
+Antes de iniciar o servidor, crie o banco de dados manualmente usando um comando SQL ou uma ferramenta de gerenciamento de banco de dados. Exemplo de comando SQL para criar o banco de dados:
+
+  ```sql
+  CREATE DATABASE brainday;
   ```
 
 3. Importe o projeto no Eclipse:
@@ -77,6 +98,26 @@ O backend e o frontend estão no mesmo repositório. Siga os passos abaixo para 
 
 ### Frontend
 
+Para configurar o frontend, siga estes passos:
+
+### Variáveis de Ambiente
+
+O projeto Angular utiliza arquivos de ambiente para configurar variáveis específicas para desenvolvimento e produção. Estes arquivos estão localizados em `src/environments/` e são:
+
+- `environment.ts` - Configurações para desenvolvimento
+- `environment.prod.ts` - Configurações para produção
+
+### Configurando Variáveis
+
+1. **Edite `src/environments/environment.ts`** para definir a URL da API para o ambiente de desenvolvimento:
+
+   ```typescript
+   export const environment = {
+     production: false,
+     apiUrl: 'http://localhost:8080'  // Substitua pela sua URL da API
+   };
+   ```
+
 1. No mesmo diretório do repositório clonado, navegue para o diretório do frontend:
   ```bash
   cd ../front-end
@@ -90,7 +131,12 @@ O backend e o frontend estão no mesmo repositório. Siga os passos abaixo para 
 3. Execute o frontend:
   ```bash
   ng serve
-```
+  ```
+
+4. Acesse a aplicação:
+  - Após executar o comando `ng serve`, o frontend estará disponível em [http://localhost:4200](http://localhost:4200).
+  - Abra o navegador e acesse essa URL para utilizar a aplicação.
+
 
 ## Licença
 

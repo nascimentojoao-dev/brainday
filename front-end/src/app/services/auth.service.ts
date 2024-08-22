@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private authUrl = 'http://localhost:8080/admin';
+  private authUrl = `${environment.apiUrl}/admin`;
+
 
   constructor(private router: Router, private http: HttpClient) { }
 
