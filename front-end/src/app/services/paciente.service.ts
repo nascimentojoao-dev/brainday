@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 
@@ -34,5 +34,9 @@ export class PacienteService {
 
   updatePaciente(pacienteId: number, paciente: any): Observable<any>{
     return this.http.put(`${this.apiUrl}/pacientes/${pacienteId}`, paciente)
+  }
+
+  deleteLaudoByLaudoId(laudoId: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/laudos/${laudoId}`)
   }
 }

@@ -39,32 +39,6 @@ public class LaudoServiceImpl implements LaudoService {
     }
 
     @Override
-    public LaudoDTO getLaudoByLaudoId(Long laudoId) {
-        Laudo laudo = laudoRepository.findById(laudoId)
-                .orElseThrow(() -> new LaudoNotFoundException(laudoId));
-
-        return new LaudoDTO(laudo.getId(), laudo.getData(), laudo.getDescricao(), laudo.getPaciente().getId());
-    }
-
-    @Override
-    public LaudoDTO updateLaudoByLaudoId(Long laudoId, LaudoDTO laudoDTO) {
-        Laudo laudo = laudoRepository.findById(laudoId)
-                .orElseThrow(() -> new LaudoNotFoundException(laudoId));
-
-        if (laudoDTO.getData() != null) {
-            laudo.setData(laudoDTO.getData());
-        }
-
-        if (laudoDTO.getDescricao() != null && !laudoDTO.getDescricao().isEmpty()) {
-            laudo.setDescricao(laudoDTO.getDescricao());
-        }
-
-        Laudo updatedLaudo = laudoRepository.save(laudo);
-
-        return new LaudoDTO(updatedLaudo.getId(), updatedLaudo.getData(), updatedLaudo.getDescricao(), updatedLaudo.getPaciente().getId());
-    }
-
-    @Override
     public void deleteLaudoByLaudoId(Long laudoId) {
         Laudo laudo = laudoRepository.findById(laudoId)
                 .orElseThrow(() -> new LaudoNotFoundException(laudoId));

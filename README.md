@@ -23,7 +23,6 @@ Este projeto é uma API desenvolvida em Spring Boot com um painel frontend em An
 
 - **Laudos**:
   - Adicionar laudos a pacientes existentes
-  - Atualizar laudos
   - Excluir laudos
   - Listar laudos de um paciente
 

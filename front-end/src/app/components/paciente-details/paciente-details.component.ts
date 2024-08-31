@@ -37,6 +37,15 @@ export class PacienteDetailsComponent implements OnInit {
     })
   }
 
+  deleteLaudo(id: number): void {
+    this.pacienteService.deleteLaudoByLaudoId(id)
+      .subscribe({
+        next: () => {
+          this.loadPacienteDetails(this.paciente.id)
+        }
+      })
+  }
+
   navigateToAddLaudo() {
     const pacienteId = this.paciente.id
     this.router.navigate(['/add-laudo', pacienteId])

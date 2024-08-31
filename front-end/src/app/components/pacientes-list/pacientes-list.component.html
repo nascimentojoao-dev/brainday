@@ -27,7 +27,7 @@
         <tr *ngFor="let paciente of pacientes" class="border-b border-slate-200 hover:bg-slate-100">
           <td class="px-6 py-3 text-left">{{ paciente.id }}</td>
           <td class="px-6 py-3 text-left">{{ paciente.nome }}</td>
-          <td class="px-6 py-3 text-left">{{ paciente.dataNascimento | date }}</td>
+          <td class="px-6 py-3 text-left">{{ paciente.dataNascimento | date:'dd MMMM yyyy':'pt-BR' }}</td>
           <td class="px-6 py-3 text-center">
             <button
             (click)="viewDetails(paciente.id)"
