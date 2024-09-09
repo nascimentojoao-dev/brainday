@@ -1,5 +1,5 @@
-<div class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md">
-  <h1 class="mb-6 text-3xl font-bold text-gray-800">Detalhes do Paciente</h1>
+<div class="max-w-4xl max-h-screen p-6 mx-auto mt-20 bg-white rounded-md shadow-md">
+  <h1 class="mb-6 text-3xl font-bold text-slate-800">Detalhes do Paciente</h1>
   
   <div class="mb-6">
     <p class="text-lg"><strong>ID:</strong> {{ paciente.id }}</p>
@@ -7,7 +7,13 @@
     <p class="text-lg"><strong>Data de Nascimento:</strong> {{ paciente.dataNascimento | date:'dd MMMM yyyy':'pt-BR' }}</p>
   </div>
 
-  <h2 class="mb-4 text-2xl font-semibold text-gray-700">Laudos</h2>
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-2xl font-semibold text-slate-800">Laudos</h2>
+    <button (click)="navigateToAddLaudo()" class="px-6 py-2 text-white rounded bg-slate-500 hover:bg-slate-600">
+      Adicionar Laudo
+    </button>    
+  </div>
+  
   <ul class="space-y-3">
     <li *ngFor="let laudo of paciente.laudos" class="flex items-center justify-between p-4 bg-gray-100 rounded-md shadow-sm">
       <div>
@@ -19,8 +25,4 @@
       </button>
     </li>
   </ul>
-
-  <button (click)="navigateToAddLaudo()" class="px-6 py-2 mt-6 text-white rounded bg-slate-500 hover:bg-slate-600">
-    Adicionar Laudo
-  </button>
 </div>
